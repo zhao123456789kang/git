@@ -1,0 +1,460 @@
+ <!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>灵动卡片 · 个人展示页</title>
+    <!-- 使用现代、干净的字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 (免费图标库) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #f6f9fc 0%, #eef2f5 100%);
+            font-family: 'Inter', sans-serif;
+            color: #1e2a3e;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        /* 主卡片容器 */
+        .card {
+            max-width: 1200px;
+            width: 100%;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(2px);
+            border-radius: 3rem;
+            box-shadow: 0 25px 45px -12px rgba(0,0,0,0.2), 0 1px 2px rgba(0,0,0,0.02);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        /* 头部介绍区域 */
+        .hero {
+            padding: 3rem 3rem 2rem 3rem;
+            background: linear-gradient(135deg, #ffffff 0%, #fef9f0 100%);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .badge {
+            display: inline-block;
+            background: #e6f0fa;
+            color: #1e6f9f;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            letter-spacing: 0.3px;
+            margin-bottom: 1.2rem;
+            backdrop-filter: blur(2px);
+        }
+
+        h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            background: linear-gradient(to right, #1f3b4c, #2c5a74);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #2c4b62;
+            max-width: 80%;
+            font-weight: 400;
+            border-left: 3px solid #3b8db0;
+            padding-left: 1.2rem;
+            margin-top: 0.5rem;
+        }
+
+        /* 两列布局: 技能/信息 + 项目展示 */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1.6fr;
+            gap: 2rem;
+            padding: 2.5rem 3rem 3rem 3rem;
+        }
+
+        /* 左侧个人档案卡片 */
+        .info-panel {
+            background: white;
+            border-radius: 2rem;
+            padding: 1.8rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+            transition: transform 0.2s;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .avatar-section {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .avatar-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(145deg, #2c7da0, #1f5e7a);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            color: white;
+            box-shadow: 0 12px 18px -8px rgba(44,125,160,0.3);
+        }
+
+        .avatar-section h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+        }
+
+        .info-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .info-list li {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            color: #2c3e50;
+            background: #f8fafc;
+            padding: 0.7rem 1rem;
+            border-radius: 60px;
+        }
+
+        .info-list i {
+            width: 26px;
+            color: #2c7da0;
+            font-size: 1.2rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            justify-content: center;
+        }
+
+        .social-links a {
+            background: #ecf3f8;
+            width: 42px;
+            height: 42px;
+            border-radius: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #1f5e7a;
+            font-size: 1.3rem;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            background: #2c7da0;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* 右侧作品集 / 动态卡片 */
+        .projects {
+            background: white;
+            border-radius: 2rem;
+            padding: 1.8rem;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border-left: 4px solid #2c7da0;
+            padding-left: 1rem;
+        }
+
+        .project-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .project-item {
+            background: #fefefe;
+            border-radius: 1.5rem;
+            padding: 1rem 1.2rem;
+            transition: all 0.2s;
+            border: 1px solid #edf2f7;
+            cursor: default;
+        }
+
+        .project-item:hover {
+            border-color: #cbdde9;
+            background: #fdfdfd;
+            transform: translateX(4px);
+            box-shadow: 0 6px 12px -8px rgba(0,0,0,0.1);
+        }
+
+        .project-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .project-tag {
+            background: #eef2ff;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.7rem;
+            border-radius: 50px;
+            color: #2c5282;
+            font-weight: 500;
+        }
+
+        .project-desc {
+            font-size: 0.85rem;
+            color: #4a5b6e;
+            margin-top: 0.5rem;
+        }
+
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            background: transparent;
+            border: 1px solid #bdd3e4;
+            padding: 0.6rem 1.4rem;
+            border-radius: 60px;
+            font-weight: 500;
+            color: #1f5e7a;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: 0.2s;
+        }
+
+        .btn-outline:hover {
+            background: #2c7da0;
+            border-color: #2c7da0;
+            color: white;
+        }
+
+        /* 底部引用 */
+        .footer-note {
+            background: rgba(0,0,0,0.02);
+            text-align: center;
+            padding: 1.2rem 2rem;
+            font-size: 0.75rem;
+            color: #5f7f9a;
+            border-top: 1px solid rgba(0,0,0,0.03);
+            letter-spacing: 0.3px;
+        }
+
+        /* 响应式 */
+        @media (max-width: 850px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+            }
+            .hero {
+                padding: 2rem 1.5rem;
+            }
+            h1 {
+                font-size: 2.3rem;
+            }
+            .hero p {
+                max-width: 100%;
+                font-size: 1rem;
+            }
+            body {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .avatar-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            .info-list li {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* 微交互 */
+        .highlight {
+            transition: all 0.2s;
+        }
+        button, a {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <div class="hero">
+        <div class="badge">
+            <i class="fas fa-code"></i>  |  全栈视野 · 创意构建
+        </div>
+        <h1>
+            让想法流动<br>用代码连接世界
+        </h1>
+        <p>
+            Hello，我是前端与交互爱好者，热衷于创造优雅且实用的数字产品。
+            这里展示了一些近期的工作流与设计思维。
+        </p>
+    </div>
+
+    <div class="dashboard">
+        <!-- 左侧信息区 -->
+        <div class="info-panel">
+            <div class="avatar-section">
+                <div class="avatar-icon">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <div>
+                    <h2>林念初</h2>
+                    <span style="font-size: 0.8rem; background:#eef2f5; padding:0.2rem 0.8rem; border-radius: 20px;">@nianshu.dev</span>
+                </div>
+            </div>
+            <ul class="info-list">
+                <li><i class="fas fa-map-pin"></i> 中国 · 杭州 / 远程</li>
+                <li><i class="fas fa-briefcase"></i> 独立开发者 · 技术顾问</li>
+                <li><i class="fas fa-globe"></i> 专注 响应式设计 · 前端工程化 · AI工具链</li>
+                <li><i class="fas fa-envelope"></i> nian.lin@dev.me</li>
+            </ul>
+            <div class="social-links">
+                <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" aria-label="小红书"><i class="fab fa-weixin"></i></a>
+            </div>
+            <a href="#" class="btn-outline" style="justify-content: center; margin-top: 2rem; width: 100%;">
+                <i class="fas fa-paper-plane"></i> 联系与合作
+            </a>
+        </div>
+
+        <!-- 右侧项目板块 / 动态卡片效果 -->
+        <div class="projects">
+            <div class="section-title">
+                <i class="fas fa-layer-group" style="color:#2c7da0;"></i> 近期创作
+            </div>
+            <div class="project-grid" id="projectList">
+                <!-- 静态项目展示，也可用于演示动态效果 -->
+                <div class="project-item">
+                    <div class="project-title">
+                        <span>🌿 智能任务板 · TaskFlow</span>
+                        <span class="project-tag">React + Tailwind</span>
+                    </div>
+                    <div class="project-desc">
+                        轻量级看板工具，支持拖拽任务、暗色模式与本地存储，团队效率提升30%。
+                    </div>
+                </div>
+                <div class="project-item">
+                    <div class="project-title">
+                        <span>📊 数据故事引擎</span>
+                        <span class="project-tag">D3.js / 可视化</span>
+                    </div>
+                    <div class="project-desc">
+                        将CSV数据转化为交互式叙事图表，开源组件累计下载2k+次。
+                    </div>
+                </div>
+                <div class="project-item">
+                    <div class="project-title">
+                        <span>🎨 灵感配色工具</span>
+                        <span class="project-tag">Vue3 + 色彩算法</span>
+                    </div>
+                    <div class="project-desc">
+                        一键生成无障碍调色板，帮助设计师快速构建主题系统。
+                    </div>
+                </div>
+                <div class="project-item">
+                    <div class="project-title">
+                        <span>⚙️ Git 提交助手 (CLI)</span>
+                        <span class="project-tag">Node.js · 开源</span>
+                    </div>
+                    <div class="project-desc">
+                        基于约定式提交的交互工具，自动生成规范commit message。
+                    </div>
+                </div>
+            </div>
+            <a href="#" class="btn-outline" style="margin-top: 1.5rem;">
+                <i class="fab fa-github"></i> 浏览全部开源项目
+            </a>
+        </div>
+    </div>
+    <div class="footer-note">
+        <i class="far fa-copyright"></i> 灵感驱动 · 保持好奇  |  每次提交都是进步的脚印 
+        <span style="margin:0 8px">✦</span> 在线站点 2026
+    </div>
+</div>
+
+<!-- 轻量级交互：控制台输出 + 动态替换问候（optional） -->
+<script>
+    (function() {
+        // 仅仅增加一点动态的趣味：鼠标悬浮在项目标题时有心跳感 + 控制台友好提示
+        console.log("✨ 欢迎访问 | 现代卡片布局 | 可自由编辑内容");
+        const items = document.querySelectorAll('.project-item');
+        items.forEach((item, idx) => {
+            item.addEventListener('click', (e) => {
+                // 轻提醒：点击任意项目可在控制台输出项目名称
+                const titleElem = item.querySelector('.project-title span:first-child');
+                if (titleElem) {
+                    console.log(`🔍 你感兴趣的项目: ${titleElem.innerText.trim()}`);
+                }
+                // 可选：增加微小的弹窗反馈，但为了体验，仅控制台提示，不干扰浏览
+                // 如果要做toast提示可自行拓展
+            });
+        });
+
+        // 社交链接占位提醒
+        const socialLinks = document.querySelectorAll('.social-links a');
+        socialLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                console.log("📢 社交平台占位链接，可替换为你真实的个人主页");
+                alert("✨ 当前为演示版，你可以替换成真实的个人链接～");
+            });
+        });
+        const btnContact = document.querySelector('.btn-outline:first-of-type');
+        if(btnContact) {
+            btnContact.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert("📧 欢迎交流： nian.lin@dev.me  | 期待合作机会");
+            });
+        }
+        // 底部版权动态年份
+        const footer = document.querySelector('.footer-note');
+        if(footer) {
+            const yearSpan = document.createElement('span');
+            yearSpan.innerHTML = ` · ${new Date().getFullYear()}`;
+            footer.appendChild(yearSpan);
+        }
+    })();
+</script>
+</body>
+</html>
